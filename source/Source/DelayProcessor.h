@@ -92,6 +92,7 @@ public:
         const int delayInSamples = juce::jlimit(1, maxDelayBufferSize - 1, static_cast<int>(delaySamples));
 
 
+        // Idea: vectorizar información paramétrica por canal.
         for (int channel = 0; channel < juce::jmin(numChannels, static_cast<int>(delayBuffers.size())); ++channel) // Descubrimos que esta función de juce 
 //obtiene la variable del número de canales según el archivo ingresado, ya que funciona igual con archivos multicanal (probamos con un archivo de 4 y funciona)
         {
