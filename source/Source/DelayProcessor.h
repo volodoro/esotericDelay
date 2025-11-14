@@ -48,7 +48,10 @@ public:
         const int maxDelaySamples = static_cast<int>(sampleRate * 2.0);
         maxDelayBufferSize = maxDelaySamples;
         
-        delayBuffers.clear();
+        delayBuffers.clear(); // Limpia la variable.
+
+        // El tamaño de vector se corresponde al número de canales. Ahora podemos hacer
+        // delayBuffers[ch].
         delayBuffers.resize(numChannels);
         
         writePositions.clear();
@@ -56,6 +59,8 @@ public:
         
         for (int ch = 0; ch < numChannels; ++ch)
         {
+            // Inicializa los buffers de cada canal al tamaño máximo de samples
+            // adelantados (maxDelaySamples).
             delayBuffers[ch].setSize(1, maxDelaySamples, false, true, false);
             delayBuffers[ch].clear();
         }
@@ -85,7 +90,8 @@ public:
         const float targetDelayMs = delayTimeMs.getTargetValue();
         const float delaySamples = (targetDelayMs / 1000.0f) * static_cast<float>(currentSampleRate);
         const int delayInSamples = juce::jlimit(1, maxDelayBufferSize - 1, static_cast<int>(delaySamples));
-//idea: procesar canales pares e impares por separado?        
+
+
         for (int channel = 0; channel < juce::jmin(numChannels, static_cast<int>(delayBuffers.size())); ++channel) // Descubrimos que esta función de juce 
 //obtiene la variable del número de canales según el archivo ingresado, ya que funciona igual con archivos multicanal (probamos con un archivo de 4 y funciona)
         {
@@ -174,7 +180,7 @@ public:
         }
     }
 
-private:
+    // Declaración de variables: búfer y posiciones de escritura.
     std::vector<juce::AudioBuffer<float>> delayBuffers;
     std::vector<int> writePositions;
     
