@@ -45,6 +45,8 @@ public:
         currentBlockSize = samplesPerBlock;
         currentNumChannels = numChannels;
         
+        // Determina el tamaño máximo del buffer de delay.
+        // En este caso, 2*Fs (para 2*Fs samples adelantados).
         const int maxDelaySamples = static_cast<int>(sampleRate * 2.0);
         maxDelayBufferSize = maxDelaySamples;
         
@@ -92,17 +94,22 @@ public:
         const int delayInSamples = juce::jlimit(1, maxDelayBufferSize - 1, static_cast<int>(delaySamples));
 
 
+        // Descubrimos que esta función de juce
+        // obtiene la variable del número de canales según el archivo ingresado, ya que funciona 
+        // igual con archivos multicanal (probamos con un archivo de 4 y funciona)
+
         // Idea: vectorizar información paramétrica por canal.
-        for (int channel = 0; channel < juce::jmin(numChannels, static_cast<int>(delayBuffers.size())); ++channel) // Descubrimos que esta función de juce 
-//obtiene la variable del número de canales según el archivo ingresado, ya que funciona igual con archivos multicanal (probamos con un archivo de 4 y funciona)
+        for (int channel = 0; channel < juce::jmin(numChannels, static_cast<int>(delayBuffers.size())); ++channel) 
         {
+            // Todo esto ya está por canal, variales locales:
             auto* channelData = const_cast<float*>(buffer[channel]);
             auto* delayBuffer = delayBuffers[channel].getWritePointer(0);
             int writePos = writePositions[channel];
             
+            // Aplica el delay.
             for (int sample = 0; sample < numSamples; ++sample)
             {
-                float currentFeedback = feedbackAmount.getNextValue();
+                float currentFeedback = feedbackAmount.getNextValue(); // currentFeedback[]
                 
                 int readPos = writePos - delayInSamples;
                 while (readPos < 0)
