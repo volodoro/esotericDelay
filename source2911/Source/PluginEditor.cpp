@@ -129,8 +129,8 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
 
     delayTimeSlider_L.setSliderStyle(juce::Slider::LinearHorizontal);
     delayTimeSlider_L.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
-    delayTimeSlider_L.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
-    delayTimeSlider_L.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    delayTimeSlider_L.setColour(juce::Slider::thumbColourId, juce::Colours::mediumpurple);
+    delayTimeSlider_L.setColour(juce::Slider::trackColourId, juce::Colours::mediumpurple);
     delayTimeSlider_L.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
     delayTimeSlider_L.setTextValueSuffix(" ms");
     addAndMakeVisible(delayTimeSlider_L);
@@ -146,8 +146,8 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
 
     delayTimeSlider_R.setSliderStyle(juce::Slider::LinearHorizontal);
     delayTimeSlider_R.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
-    delayTimeSlider_R.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
-    delayTimeSlider_R.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    delayTimeSlider_R.setColour(juce::Slider::thumbColourId, juce::Colours::mediumpurple);
+    delayTimeSlider_R.setColour(juce::Slider::trackColourId, juce::Colours::mediumpurple);
     delayTimeSlider_R.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
     delayTimeSlider_R.setTextValueSuffix(" ms");
     addAndMakeVisible(delayTimeSlider_R);
@@ -163,8 +163,8 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
 
     feedbackSlider_L.setSliderStyle(juce::Slider::LinearHorizontal);
     feedbackSlider_L.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
-    feedbackSlider_L.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
-    feedbackSlider_L.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    feedbackSlider_L.setColour(juce::Slider::thumbColourId, juce::Colours::mediumpurple);
+    feedbackSlider_L.setColour(juce::Slider::trackColourId, juce::Colours::mediumpurple);
     feedbackSlider_L.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
     addAndMakeVisible(feedbackSlider_L);
 
@@ -179,8 +179,8 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
 
     feedbackSlider_R.setSliderStyle(juce::Slider::LinearHorizontal);
     feedbackSlider_R.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
-    feedbackSlider_R.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
-    feedbackSlider_R.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    feedbackSlider_R.setColour(juce::Slider::thumbColourId, juce::Colours::mediumpurple);
+    feedbackSlider_R.setColour(juce::Slider::trackColourId, juce::Colours::mediumpurple);
     feedbackSlider_R.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
     addAndMakeVisible(feedbackSlider_R);
 
@@ -195,8 +195,8 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
 
     wetDrySlider.setSliderStyle(juce::Slider::LinearHorizontal);
     wetDrySlider.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
-    wetDrySlider.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
-    wetDrySlider.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    wetDrySlider.setColour(juce::Slider::thumbColourId, juce::Colours::mediumpurple);
+    wetDrySlider.setColour(juce::Slider::trackColourId, juce::Colours::mediumpurple);
     wetDrySlider.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
     addAndMakeVisible(wetDrySlider);
 
@@ -287,7 +287,7 @@ void DelayAudioProcessorEditor::resized()
 
     // ================== LOGOTIPO ESQUINA IZQUIERDA (OM_logo) ==================
     // Controles PARA AJUSTAR TAMAÑO / POSICIÓN:
-    int logoWidth = 300;   // <-- cambia ancho del logo
+    int logoWidth = 350;   // <-- cambia ancho del logo
     int logoHeight = 200;   // <-- cambia alto del logo
     int logoX = 7;   // <-- distancia desde el borde izquierdo
     int logoY = 5;   // <-- distancia desde el borde superior
