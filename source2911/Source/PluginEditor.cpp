@@ -43,11 +43,65 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
             juce::RectanglePlacement::centred
             | juce::RectanglePlacement::onlyReduceInSize);
         addAndMakeVisible(omNombresImage);
+
+        // delayTimeL
+        juce::Image dtLImg = juce::ImageFileFormat::loadFrom(
+            BinaryData::delayTimeL_png,
+            BinaryData::delayTimeL_pngSize
+        );
+        delayTimeLImage.setImage(dtLImg,
+            juce::RectanglePlacement::xLeft   // alineado a la izquierda
+            | juce::RectanglePlacement::yMid    // centrado verticalmente
+            | juce::RectanglePlacement::onlyReduceInSize);
+        addAndMakeVisible(delayTimeLImage);
+
+
+        // delayTimeR
+        juce::Image dtRImg = juce::ImageFileFormat::loadFrom(
+            BinaryData::delayTimeR_png,
+            BinaryData::delayTimeR_pngSize
+        );
+        delayTimeRImage.setImage(dtRImg,
+            juce::RectanglePlacement::xLeft
+            | juce::RectanglePlacement::yMid
+            | juce::RectanglePlacement::onlyReduceInSize);
+        addAndMakeVisible(delayTimeRImage);
+
+        // feedbackL
+        juce::Image fbLImg = juce::ImageFileFormat::loadFrom(
+            BinaryData::feedbackL_png,
+            BinaryData::feedbackL_pngSize
+        );
+        feedbackLImage.setImage(fbLImg,
+            juce::RectanglePlacement::xLeft
+            | juce::RectanglePlacement::yMid
+            | juce::RectanglePlacement::onlyReduceInSize);
+        addAndMakeVisible(feedbackLImage);
+
+        // feedbackR
+        juce::Image fbRImg = juce::ImageFileFormat::loadFrom(
+            BinaryData::feedbackR_png,
+            BinaryData::feedbackR_pngSize
+        );
+        feedbackRImage.setImage(fbRImg,
+            juce::RectanglePlacement::xLeft
+            | juce::RectanglePlacement::yMid
+            | juce::RectanglePlacement::onlyReduceInSize);
+        addAndMakeVisible(feedbackRImage);
+
+        // wetDryMix
+        juce::Image wdImg = juce::ImageFileFormat::loadFrom(
+            BinaryData::wetDryMix_png,
+            BinaryData::wetDryMix_pngSize
+        );
+        wetDryMixImage.setImage(wdImg,
+            juce::RectanglePlacement::xLeft
+            | juce::RectanglePlacement::yMid
+            | juce::RectanglePlacement::onlyReduceInSize);
+        addAndMakeVisible(wetDryMixImage);
     }
 
-    // Opcional: esconder los labels de texto antiguos (por si los dejas en el código)
-    titleLabel.setVisible(false);
-    byLabel.setVisible(false);
+
     // ================== LABELS / TEXTO ==================
 
     // Configurar título
@@ -161,6 +215,15 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
     bypassButton.setColour(juce::TextButton::textColourOffId, juce::Colours::white);
     addAndMakeVisible(bypassButton);
 
+    // Opcional: esconder los labels de texto antiguos (por si los dejas en el código)
+    titleLabel.setVisible(false);
+    byLabel.setVisible(false);
+    delayTimeLabel_L.setVisible(false);
+    delayTimeLabel_R.setVisible(false);
+    feedbackLabel_L.setVisible(false);
+    feedbackLabel_R.setVisible(false);
+    wetDryLabel.setVisible(false);
+
     // ========================================================================
     // Attachments
     // ========================================================================
@@ -188,10 +251,10 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
         apvts, "bypass", bypassButton);
 
     // Tamaño de la ventana
-    setSize(900, 600);
+    setSize(850, 700);
     setResizable(true, true);
     // minW, minH, maxW, maxH  (maxH ≥ 600 para que no se corte)
-    setResizeLimits(600, 500, 900, 1100);
+    setResizeLimits(790, 500, 900, 800);
 }
 
 DelayAudioProcessorEditor::~DelayAudioProcessorEditor()
@@ -226,28 +289,28 @@ void DelayAudioProcessorEditor::resized()
     // Controles PARA AJUSTAR TAMAÑO / POSICIÓN:
     int logoWidth = 300;   // <-- cambia ancho del logo
     int logoHeight = 200;   // <-- cambia alto del logo
-    int logoX = 0;   // <-- distancia desde el borde izquierdo
+    int logoX = 7;   // <-- distancia desde el borde izquierdo
     int logoY = 5;   // <-- distancia desde el borde superior
 
     omLogoImage.setBounds(logoX, logoY, logoWidth, logoHeight);
 
     // ================== TÍTULO (OM_titulo) ==================
     // Controles PARA AJUSTAR TAMAÑO / POSICIÓN:
-    int tituloWidth = 450;  // ancho del PNG de título
-    int tituloHeight = 70;   // alto del PNG de título
+    int tituloWidth = 500;  // ancho del PNG de título
+    int tituloHeight = 95;   // alto del PNG de título
     int offsetX = 20;   //offset para ajustar la distancia respecto al margen derecho
-    int tituloY = 30;   // posición vertical del título
+    int tituloY = (logoHeight/2 - tituloHeight/2) ;   // posición vertical del título
 
     int tituloX = (getWidth() - (tituloWidth + offsetX)); // centrado horizontalmente
     omTituloImage.setBounds(tituloX, tituloY, tituloWidth, tituloHeight);
 
     // ================== NOMBRES (OM_nombres) ==================
     // Controles PARA AJUSTAR TAMAÑO / POSICIÓN:
-    int nombresWidth = 320;   // ancho del PNG de nombres
-    int nombresHeight = 30;    // alto del PNG de nombres
+    int nombresWidth = 370;   // ancho del PNG de nombres
+    int nombresHeight = 50;    // alto del PNG de nombres
     int nombresY = tituloY + tituloHeight + 5; // justo bajo el título (+5 px de margen)
 
-    int nombresX = (getWidth() - (nombresWidth + offsetX)) ; // centrado horizontalmente
+    int nombresX = (tituloX*1.25) ; // centrado horizontalmente
     omNombresImage.setBounds(nombresX, nombresY, nombresWidth, nombresHeight);
 
     // ================== ESPACIO RESERVADO BAJO EL HEADER ==================
@@ -264,7 +327,7 @@ void DelayAudioProcessorEditor::resized()
 
     // ================== CONTROLES ==================
 
-    // Botones Mute y Bypass
+ // Botones Mute y Bypass (tal como ya lo tenías)
     auto buttonsArea = b.removeFromTop(40);
     auto muteArea = buttonsArea.removeFromLeft(buttonsArea.getWidth() / 2 - 5);
     buttonsArea.removeFromLeft(10); // espaciado
@@ -273,42 +336,81 @@ void DelayAudioProcessorEditor::resized()
 
     b.removeFromTop(15);
 
-    // Delay Time L
-    auto delayLArea = b.removeFromTop(60);
-    delayTimeLabel_L.setBounds(delayLArea.removeFromTop(25));
-    delayLArea.removeFromTop(5);
-    delayTimeSlider_L.setBounds(delayLArea);
+    // Parámetros para las filas
+    const int rowHeight = 60;
+    const int labelHeight = 35;
+    const int labelToSliderGap = 5;
+    const int labelImageWidth = 180; // ancho del área donde va el PNG (ajusta a gusto)
+
+    // ================== Delay Time L ==================
+    {
+        auto row = b.removeFromTop(rowHeight);
+
+        // área superior de la fila donde va la "etiqueta" (PNG)
+        auto labelArea = row.removeFromTop(labelHeight);
+
+        // parte izquierda del labelArea para el PNG
+        auto imageArea = labelArea.removeFromLeft(labelImageWidth);
+        delayTimeLImage.setBounds(imageArea); // PNG queda a la izquierda
+
+        row.removeFromTop(labelToSliderGap);
+        delayTimeSlider_L.setBounds(row);
+    }
+
+    // Espacio entre filas
+    b.removeFromTop(15);
+
+    // ================== Delay Time R ==================
+    {
+        auto row = b.removeFromTop(rowHeight);
+        auto labelArea = row.removeFromTop(labelHeight);
+        auto imageArea = labelArea.removeFromLeft(labelImageWidth);
+        delayTimeRImage.setBounds(imageArea);
+
+        row.removeFromTop(labelToSliderGap);
+        delayTimeSlider_R.setBounds(row);
+    }
 
     b.removeFromTop(15);
 
-    // Delay Time R
-    auto delayRArea = b.removeFromTop(60);
-    delayTimeLabel_R.setBounds(delayRArea.removeFromTop(25));
-    delayRArea.removeFromTop(5);
-    delayTimeSlider_R.setBounds(delayRArea);
+    // ================== Feedback L ==================
+    {
+        auto row = b.removeFromTop(rowHeight);
+        auto labelArea = row.removeFromTop(labelHeight);
+        auto imageArea = labelArea.removeFromLeft(labelImageWidth);
+        feedbackLImage.setBounds(imageArea);
+
+        row.removeFromTop(labelToSliderGap);
+        feedbackSlider_L.setBounds(row);
+    }
 
     b.removeFromTop(15);
 
-    // Feedback L
-    auto feedbackLArea = b.removeFromTop(60);
-    feedbackLabel_L.setBounds(feedbackLArea.removeFromTop(25));
-    feedbackLArea.removeFromTop(5);
-    feedbackSlider_L.setBounds(feedbackLArea);
+    // ================== Feedback R ==================
+    {
+        auto row = b.removeFromTop(rowHeight);
+        auto labelArea = row.removeFromTop(labelHeight);
+        auto imageArea = labelArea.removeFromLeft(labelImageWidth);
+        feedbackRImage.setBounds(imageArea);
+
+        row.removeFromTop(labelToSliderGap);
+        feedbackSlider_R.setBounds(row);
+    }
 
     b.removeFromTop(15);
 
-    // Feedback R
-    auto feedbackRArea = b.removeFromTop(60);
-    feedbackLabel_R.setBounds(feedbackRArea.removeFromTop(25));
-    feedbackRArea.removeFromTop(5);
-    feedbackSlider_R.setBounds(feedbackRArea);
+    // ================== Dry/Wet Mix ==================
+    {
+        auto row = b.removeFromTop(rowHeight);
+        auto labelArea = row.removeFromTop(labelHeight);
 
-    b.removeFromTop(15);
+        // si quieres que este PNG tenga un ancho distinto:
+        auto imageArea = labelArea.removeFromLeft(labelImageWidth);
+        wetDryMixImage.setBounds(imageArea);
 
-    // Wet/Dry Mix
-    auto wetDryArea = b.removeFromTop(60);
-    wetDryLabel.setBounds(wetDryArea.removeFromTop(25));
-    wetDryArea.removeFromTop(5);
-    wetDrySlider.setBounds(wetDryArea);
-}
+        row.removeFromTop(labelToSliderGap);
+        wetDrySlider.setBounds(row);
+    }
+
+    }
 

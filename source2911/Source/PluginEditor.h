@@ -31,8 +31,15 @@ private:
     juce::ImageComponent omLogoImage;     // OM_logo (esquina superior izquierda)
     juce::ImageComponent omTituloImage;   // OM_titulo (reemplaza título)
     juce::ImageComponent omNombresImage;  // OM_nombres (reemplaza nombres)
-   
 
+    // === NUEVAS IMÁGENES PARA LOS SLIDERS ===
+    juce::ImageComponent delayTimeLImage;
+    juce::ImageComponent delayTimeRImage;
+    juce::ImageComponent feedbackLImage;
+    juce::ImageComponent feedbackRImage;
+    juce::ImageComponent wetDryMixImage;
+
+   
 
     // Título
     juce::Label titleLabel;
