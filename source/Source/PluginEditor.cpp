@@ -14,14 +14,14 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     // Configurar título
-    titleLabel.setText("CUSTOM DELAY PLUGIN", juce::dontSendNotification);
+    titleLabel.setText("ESOTERIC DELAY PLUGIN", juce::dontSendNotification);
     titleLabel.setFont(juce::Font(22.0f, juce::Font::bold));
     titleLabel.setJustificationType(juce::Justification::centred);
     titleLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     addAndMakeVisible(titleLabel);
     
     // Configurar by
-    byLabel.setText("Ignacio Marino - Nicolás Vásquez | OM Audio", juce::dontSendNotification);
+    byLabel.setText("Ignacio Marino - Nicolas Vasquez | OM Plugins", juce::dontSendNotification);
     byLabel.setFont(juce::Font(14.0f, juce::Font::bold));
     byLabel.setJustificationType(juce::Justification::centred);
     byLabel.setColour(juce::Label::textColourId, juce::Colours::white);
@@ -245,5 +245,6 @@ void DelayAudioProcessorEditor::resized()
     wetDryArea.removeFromTop(5);
     wetDrySlider.setBounds(wetDryArea);
 }
+
 
 
