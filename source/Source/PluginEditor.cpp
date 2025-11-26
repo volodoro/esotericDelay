@@ -167,26 +167,40 @@ DelayAudioProcessorEditor::~DelayAudioProcessorEditor()
 //==============================================================================
 void DelayAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // Fondo con gradiente
     auto bounds = getLocalBounds();
     
+    // Logo
+    auto logoImage = juce::ImageCache::getFromMemory(BinaryData::logo_png, BinaryData::logo_pngSize);
+
+    if (!logoImage.isNull())
+      logoComponent.setImage (logoImage, juce::RectanglePlacement::stretchToFit);
+    else 
+      jassert(!logoImage.isNull());
+
+    addAndMakeVisible(logoComponent);
+
+    // Gradiente
     juce::ColourGradient gradient(
-        juce::Colour(0xff1a1a2e), bounds.getTopLeft().toFloat(),
-        juce::Colour(0xff16213e), bounds.getBottomRight().toFloat(),
+        juce::Colour(0xff3b3b3b), bounds.getTopLeft().toFloat(),
+        juce::Colour(0xff5c3bc8), bounds.getBottomRight().toFloat(),
         false);
-    
+
     g.setGradientFill(gradient);
     g.fillRect(bounds);
-    
-    // Borde
-    g.setColour(juce::Colours::cyan.withAlpha(0.5f));
-    g.drawRect(bounds, 2);
+
+    // (Opcional) borde
+    g.setColour(juce::Colours::black.withAlpha(0.6f));
+    g.drawRect(bounds, 1);}
+
 }
 
 void DelayAudioProcessorEditor::resized()
 {
     auto bounds = getLocalBounds().reduced(10);
     
+    // Logo
+    logoComponent.setBounds(0, 0, 90, 75);
+
     // Título
     auto titleArea = bounds.removeFromTop(40);
     titleLabel.setBounds(titleArea);
