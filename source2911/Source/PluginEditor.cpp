@@ -191,7 +191,7 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor(DelayAudioProcessor& p)
     setSize(900, 600);
     setResizable(true, true);
     // minW, minH, maxW, maxH  (maxH ≥ 600 para que no se corte)
-    setResizeLimits(400, 500, 900, 800);
+    setResizeLimits(600, 500, 900, 1100);
 }
 
 DelayAudioProcessorEditor::~DelayAudioProcessorEditor()
@@ -200,6 +200,23 @@ DelayAudioProcessorEditor::~DelayAudioProcessorEditor()
 
 //==============================================================================
 // Fondo con gradiente
+void DelayAudioProcessorEditor::paint(juce::Graphics& g)
+{
+    // Fondo con gradiente
+    auto bounds = getLocalBounds().toFloat();
+
+    juce::ColourGradient gradient(
+        juce::Colour(0xff3b3b3b), bounds.getTopLeft().toFloat(),
+        juce::Colour(0xff5c3bc8), bounds.getBottomRight().toFloat(),
+        false);
+
+    g.setGradientFill(gradient);
+    g.fillRect(bounds);
+
+    // (Opcional) borde
+    g.setColour(juce::Colours::black.withAlpha(0.6f));
+    g.drawRect(bounds, 1);
+}
 void DelayAudioProcessorEditor::resized()
 {
     // Área total del editor con un pequeño margen
@@ -207,20 +224,21 @@ void DelayAudioProcessorEditor::resized()
 
     // ================== LOGOTIPO ESQUINA IZQUIERDA (OM_logo) ==================
     // Controles PARA AJUSTAR TAMAÑO / POSICIÓN:
-    int logoWidth = 80;   // <-- cambia ancho del logo
-    int logoHeight = 80;   // <-- cambia alto del logo
-    int logoX = 10;   // <-- distancia desde el borde izquierdo
-    int logoY = 10;   // <-- distancia desde el borde superior
+    int logoWidth = 300;   // <-- cambia ancho del logo
+    int logoHeight = 200;   // <-- cambia alto del logo
+    int logoX = 0;   // <-- distancia desde el borde izquierdo
+    int logoY = 5;   // <-- distancia desde el borde superior
 
     omLogoImage.setBounds(logoX, logoY, logoWidth, logoHeight);
 
     // ================== TÍTULO (OM_titulo) ==================
     // Controles PARA AJUSTAR TAMAÑO / POSICIÓN:
-    int tituloWidth = 260;  // ancho del PNG de título
-    int tituloHeight = 60;   // alto del PNG de título
-    int tituloY = 20;   // posición vertical del título
+    int tituloWidth = 450;  // ancho del PNG de título
+    int tituloHeight = 70;   // alto del PNG de título
+    int offsetX = 20;   //offset para ajustar la distancia respecto al margen derecho
+    int tituloY = 30;   // posición vertical del título
 
-    int tituloX = (getWidth() - tituloWidth) / 2; // centrado horizontalmente
+    int tituloX = (getWidth() - (tituloWidth + offsetX)); // centrado horizontalmente
     omTituloImage.setBounds(tituloX, tituloY, tituloWidth, tituloHeight);
 
     // ================== NOMBRES (OM_nombres) ==================
@@ -229,7 +247,7 @@ void DelayAudioProcessorEditor::resized()
     int nombresHeight = 30;    // alto del PNG de nombres
     int nombresY = tituloY + tituloHeight + 5; // justo bajo el título (+5 px de margen)
 
-    int nombresX = (getWidth() - nombresWidth) / 2; // centrado horizontalmente
+    int nombresX = (getWidth() - (nombresWidth + offsetX)) ; // centrado horizontalmente
     omNombresImage.setBounds(nombresX, nombresY, nombresWidth, nombresHeight);
 
     // ================== ESPACIO RESERVADO BAJO EL HEADER ==================
