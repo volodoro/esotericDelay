@@ -33,15 +33,25 @@ private:
     // by
     juce::Label byLabel;
     
-    // Delay Time
-    juce::Label delayTimeLabel;
-    juce::Slider delayTimeSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
+    // Delay Time L
+    juce::Label delayTimeLabel_L;
+    juce::Slider delayTimeSlider_L;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment_L;
+
+    // Delay Time R
+    juce::Label delayTimeLabel_R;
+    juce::Slider delayTimeSlider_R;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment_R;
     
-    // Feedback
-    juce::Label feedbackLabel;
-    juce::Slider feedbackSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
+    // Feedback L
+    juce::Label feedbackLabel_L;
+    juce::Slider feedbackSlider_L;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment_L;
+
+    // Feedback R
+    juce::Label feedbackLabel_R;
+    juce::Slider feedbackSlider_R;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment_R;
     
     // Wet/Dry Mix
     juce::Label wetDryLabel;

@@ -59,7 +59,7 @@ public:
 		writePositions.resize(numChannels, 0);
 
 		for (int ch = 0; ch < numChannels; ++ch)
-		{
+		{ // Creación de buffer
 			delayBuffers[ch].setSize(1, maxDelaySamples, false, true, false);
 			delayBuffers[ch].clear();
 		}
@@ -145,7 +145,6 @@ public:
 			if (channel == 1) {
 				// canal 1 o R
 
-				//
 				auto* delayBufferR = delayBuffers[channel].getWritePointer(0);
 				int writePosR = writePositions[channel];
 

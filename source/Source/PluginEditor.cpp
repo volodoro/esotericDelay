@@ -21,45 +21,78 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
     addAndMakeVisible(titleLabel);
     
     // Configurar by
-    byLabel.setText("Prof. Ricardo Saldias | DSON - Universidad de Chile", juce::dontSendNotification);
+    byLabel.setText("Ignacio Marino - Nicolás Vásquez | OM Audio", juce::dontSendNotification);
     byLabel.setFont(juce::Font(14.0f, juce::Font::bold));
     byLabel.setJustificationType(juce::Justification::centred);
     byLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     addAndMakeVisible(byLabel);
     
     // ========================================================================
-    // Configurar Delay Time Slider
+    // Configurar Delay Time L Slider
     // ========================================================================
-    delayTimeLabel.setText("Delay Time (ms)", juce::dontSendNotification);
-    delayTimeLabel.setFont(juce::Font(16.0f, juce::Font::bold));
-    delayTimeLabel.setJustificationType(juce::Justification::centredLeft);
-    delayTimeLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    addAndMakeVisible(delayTimeLabel);
+    delayTimeLabel_L.setText("Delay Time L (ms)", juce::dontSendNotification);
+    delayTimeLabel_L.setFont(juce::Font(16.0f, juce::Font::bold));
+    delayTimeLabel_L.setJustificationType(juce::Justification::centredLeft);
+    delayTimeLabel_L.setColour(juce::Label::textColourId, juce::Colours::white);
+    addAndMakeVisible(delayTimeLabel_L);
     
-    delayTimeSlider.setSliderStyle(juce::Slider::LinearHorizontal);
-    delayTimeSlider.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
-    delayTimeSlider.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
-    delayTimeSlider.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
-    delayTimeSlider.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
-    delayTimeSlider.setTextValueSuffix(" ms");
-    addAndMakeVisible(delayTimeSlider);
+    delayTimeSlider_L.setSliderStyle(juce::Slider::LinearHorizontal);
+    delayTimeSlider_L.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
+    delayTimeSlider_L.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
+    delayTimeSlider_L.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    delayTimeSlider_L.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
+    delayTimeSlider_L.setTextValueSuffix(" ms");
+    addAndMakeVisible(delayTimeSlider_L);
     
     // ========================================================================
-    // Configurar Feedback Slider
+// Configurar Delay Time R Slider
+// ========================================================================
+    delayTimeLabel_R.setText("Delay Time R (ms)", juce::dontSendNotification);
+    delayTimeLabel_R.setFont(juce::Font(16.0f, juce::Font::bold));
+    delayTimeLabel_R.setJustificationType(juce::Justification::centredLeft);
+    delayTimeLabel_R.setColour(juce::Label::textColourId, juce::Colours::white);
+    addAndMakeVisible(delayTimeLabel_R);
+
+    delayTimeSlider_R.setSliderStyle(juce::Slider::LinearHorizontal);
+    delayTimeSlider_R.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
+    delayTimeSlider_R.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
+    delayTimeSlider_R.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    delayTimeSlider_R.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
+    delayTimeSlider_R.setTextValueSuffix(" ms");
+    addAndMakeVisible(delayTimeSlider_R);
+
     // ========================================================================
-    feedbackLabel.setText("Feedback (%)", juce::dontSendNotification);
-    feedbackLabel.setFont(juce::Font(16.0f, juce::Font::bold));
-    feedbackLabel.setJustificationType(juce::Justification::centredLeft);
-    feedbackLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    addAndMakeVisible(feedbackLabel);
+    // Configurar Feedback L Slider
+    // ========================================================================
+    feedbackLabel_L.setText("Feedback L (%)", juce::dontSendNotification);
+    feedbackLabel_L.setFont(juce::Font(16.0f, juce::Font::bold));
+    feedbackLabel_L.setJustificationType(juce::Justification::centredLeft);
+    feedbackLabel_L.setColour(juce::Label::textColourId, juce::Colours::white);
+    addAndMakeVisible(feedbackLabel_L);
     
-    feedbackSlider.setSliderStyle(juce::Slider::LinearHorizontal);
-    feedbackSlider.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
-    feedbackSlider.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
-    feedbackSlider.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
-    feedbackSlider.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
-    addAndMakeVisible(feedbackSlider);
+    feedbackSlider_L.setSliderStyle(juce::Slider::LinearHorizontal);
+    feedbackSlider_L.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
+    feedbackSlider_L.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
+    feedbackSlider_L.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    feedbackSlider_L.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
+    addAndMakeVisible(feedbackSlider_L);
     
+// ========================================================================
+// Configurar Feedback R Slider
+// ========================================================================
+    feedbackLabel_R.setText("Feedback R (%)", juce::dontSendNotification);
+    feedbackLabel_R.setFont(juce::Font(16.0f, juce::Font::bold));
+    feedbackLabel_R.setJustificationType(juce::Justification::centredLeft);
+    feedbackLabel_R.setColour(juce::Label::textColourId, juce::Colours::white);
+    addAndMakeVisible(feedbackLabel_R);
+
+    feedbackSlider_R.setSliderStyle(juce::Slider::LinearHorizontal);
+    feedbackSlider_R.setTextBoxStyle(juce::Slider::TextBoxRight, false, 100, 25);
+    feedbackSlider_R.setColour(juce::Slider::thumbColourId, juce::Colours::cyan);
+    feedbackSlider_R.setColour(juce::Slider::trackColourId, juce::Colours::lightblue);
+    feedbackSlider_R.setColour(juce::Slider::backgroundColourId, juce::Colours::darkgrey);
+    addAndMakeVisible(feedbackSlider_R);
+
     // ========================================================================
     // Configurar Wet/Dry Slider
     // ========================================================================
@@ -99,11 +132,17 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
     // ========================================================================
     auto& apvts = audioProcessor.getAPVTS();
     
-    delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-        apvts, "delayTime", delayTimeSlider);
+    delayTimeAttachment_L = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>( //"delayTime" es un texto alternativo?
+        apvts, "delayTimeL", delayTimeSlider_L);
     
-    feedbackAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-        apvts, "feedback", feedbackSlider);
+    delayTimeAttachment_R = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        apvts, "delayTimeR", delayTimeSlider_R);
+
+    feedbackAttachment_L = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        apvts, "feedbackL", feedbackSlider_L);
+
+    feedbackAttachment_R = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        apvts, "feedbackR", feedbackSlider_R);
     
     wetDryAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         apvts, "wetDry", wetDrySlider);
@@ -115,7 +154,7 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
         apvts, "bypass", bypassButton);
     
     // Tamaño de la ventana (aumentado para los nuevos controles)
-    setSize (500, 350);
+    setSize (500, 600);
     setResizable(true, true);
     setResizeLimits(400, 300, 800, 500);
 
@@ -167,20 +206,37 @@ void DelayAudioProcessorEditor::resized()
     
     bounds.removeFromTop(15);
     
-    // Delay Time
-    auto delayArea = bounds.removeFromTop(60);
-    delayTimeLabel.setBounds(delayArea.removeFromTop(25));
-    delayArea.removeFromTop(5);
-    delayTimeSlider.setBounds(delayArea);
+    // Delay Time L
+    auto delayLArea = bounds.removeFromTop(60);
+    delayTimeLabel_L.setBounds(delayLArea.removeFromTop(25));
+    delayLArea.removeFromTop(5);
+    delayTimeSlider_L.setBounds(delayLArea);
     
     bounds.removeFromTop(15);
+
+   //  Delay Time R
+
+    auto delayRArea = bounds.removeFromTop(60);
+    delayTimeLabel_R.setBounds(delayRArea.removeFromTop(25));
+    delayRArea.removeFromTop(5);
+    delayTimeSlider_R.setBounds(delayRArea);
+
+    bounds.removeFromTop(15);
     
-    // Feedback
-    auto feedbackArea = bounds.removeFromTop(60);
-    feedbackLabel.setBounds(feedbackArea.removeFromTop(25));
-    feedbackArea.removeFromTop(5);
-    feedbackSlider.setBounds(feedbackArea);
+    // Feedback L
+    auto feedbackLArea = bounds.removeFromTop(60);
+    feedbackLabel_L.setBounds(feedbackLArea.removeFromTop(25));
+    feedbackLArea.removeFromTop(5);
+    feedbackSlider_L.setBounds(feedbackLArea);
     
+    bounds.removeFromTop(15);
+
+    //// Feedback R
+    auto feedbackRArea = bounds.removeFromTop(60);
+    feedbackLabel_R.setBounds(feedbackRArea.removeFromTop(25));
+    feedbackRArea.removeFromTop(5);
+    feedbackSlider_R.setBounds(feedbackRArea);
+
     bounds.removeFromTop(15);
     
     // Wet/Dry Mix

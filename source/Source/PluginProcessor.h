@@ -65,8 +65,10 @@ private:
     
     juce::AudioProcessorValueTreeState apvts;
     
-    static constexpr const char* PARAM_DELAY_TIME = "delayTime";
-    static constexpr const char* PARAM_FEEDBACK = "feedback";
+    static constexpr const char* PARAM_DELAY_TIME_L = "delayTimeL";
+    static constexpr const char* PARAM_DELAY_TIME_R = "delayTimeR";
+    static constexpr const char* PARAM_FEEDBACK_L = "feedbackL";
+    static constexpr const char* PARAM_FEEDBACK_R = "feedbackR";
     static constexpr const char* PARAM_WET_DRY = "wetDry";
     static constexpr const char* PARAM_MUTE = "mute";
     static constexpr const char* PARAM_BYPASS = "bypass";       

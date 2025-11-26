@@ -32,20 +32,50 @@ DelayAudioProcessor::~DelayAudioProcessor()
 juce::AudioProcessorValueTreeState::ParameterLayout DelayAudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
+
+//==========================================================================
+// PARÁMETRO: DELAY TIME
+//==========================================================================
     
-    // Parámetro: Tiempo de Delay (0 - 2000 ms)
+    // Parámetro: Tiempo de Delay L (0 - 2000 ms)
     layout.add(std::make_unique<juce::AudioParameterFloat>(
-        juce::ParameterID(PARAM_DELAY_TIME, 1),
-        "Delay Time",
+        juce::ParameterID(PARAM_DELAY_TIME_L, 1),
+        "Delay Time L",
         juce::NormalisableRange<float>(0.0f, 2000.0f, 1.0f),
         500.0f,  // Default: 500ms
         "ms"
     ));
-    
-    // Parámetro: Feedback (0 - 95%)
+    // Parámetro: Tiempo de Delay R (0 - 2000 ms)
     layout.add(std::make_unique<juce::AudioParameterFloat>(
-        juce::ParameterID(PARAM_FEEDBACK, 1),
-        "Feedback",
+        juce::ParameterID(PARAM_DELAY_TIME_R, 1),
+        "Delay Time R",
+        juce::NormalisableRange<float>(0.0f, 2000.0f, 1.0f),
+        500.0f,  // Default: 500ms
+        "ms"
+    ));
+
+//==========================================================================
+// PARÁMETRO: FEEDBACK
+//==========================================================================
+
+
+
+    // Parámetro: Feedback L (0 - 95%)
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        juce::ParameterID(PARAM_FEEDBACK_L, 1),
+        "Feedback L",
+        juce::NormalisableRange<float>(0.0f, 0.95f, 0.01f),
+        0.5f,    // Default: 50%
+        "%",
+        juce::AudioProcessorParameter::genericParameter,
+        [](float value, int) { return juce::String(value * 100.0f, 1) + "%"; },
+        nullptr
+    ));
+
+    // Parámetro: Feedback R (0 - 95%)
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        juce::ParameterID(PARAM_FEEDBACK_R, 1),
+        "Feedback R",
         juce::NormalisableRange<float>(0.0f, 0.95f, 0.01f),
         0.5f,    // Default: 50%
         "%",
@@ -119,23 +149,47 @@ bool DelayAudioProcessor::isMidiEffect() const
 
 double DelayAudioProcessor::getTailLengthSeconds() const
 {
-    // El delay tiene tail debido al feedback
-    auto* delayTimeParam = apvts.getRawParameterValue(PARAM_DELAY_TIME);
-    auto* feedbackParam = apvts.getRawParameterValue(PARAM_FEEDBACK);
+    // El delay tiene tail debido al feedback AQUÍ TAMBIÉN HAY QUE USAR LAS CONSTANTES DUPLICADAS QUE ACABAMOS DE CREAR
+
+    //delay time y feedback L
+    auto* delayTimeParamL = apvts.getRawParameterValue(PARAM_DELAY_TIME_L);
+    auto* feedbackParamL = apvts.getRawParameterValue(PARAM_FEEDBACK_L);
+
+
+    // IF PARA CANAL L 
     
-    if (delayTimeParam && feedbackParam)
+    if (delayTimeParamL && feedbackParamL)
     {
-        float delayMs = delayTimeParam->load();
-        float feedback = feedbackParam->load();
+        float delayMsL = delayTimeParamL->load();
+        float feedbackL = feedbackParamL->load();
         
         // Calcular tiempo de tail aproximado basado en feedback
-        if (feedback > 0.01f)
+        if (feedbackL > 0.01f)
         {
-            float tailSeconds = (delayMs / 1000.0f) * (1.0f / (1.0f - feedback));
-            return juce::jlimit(0.0, 10.0, static_cast<double>(tailSeconds));
+            float tailSecondsL = (delayMsL / 1000.0f) * (1.0f / (1.0f - feedbackL));
+            return juce::jlimit(0.0, 10.0, static_cast<double>(tailSecondsL));
         }
     }
     
+    return 0.0;
+    //delay time y feedback R
+    auto* delayTimeParamR = apvts.getRawParameterValue(PARAM_DELAY_TIME_R);
+    auto* feedbackParamR = apvts.getRawParameterValue(PARAM_FEEDBACK_R);
+
+    // IF PARA CANAL R
+
+    if (delayTimeParamR && feedbackParamR)
+    {
+        float delayMsR = delayTimeParamR->load();
+        float feedbackR = feedbackParamR->load();
+
+        // Calcular tiempo de tail aproximado basado en feedback
+        if (feedbackR > 0.01f)
+        {
+            float tailSecondsR = (delayMsR / 1000.0f) * (1.0f / (1.0f - feedbackR));
+            return juce::jlimit(0.0, 10.0, static_cast<double>(tailSecondsR));
+        }
+    }
     return 0.0;
 }
 
@@ -171,15 +225,27 @@ void DelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
     // Preparar el procesador de delay
     delayProcessor.prepare(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
     
-    // Establecer valores iniciales de parámetros
-    auto* delayTimeParam = apvts.getRawParameterValue(PARAM_DELAY_TIME);
-    auto* feedbackParam = apvts.getRawParameterValue(PARAM_FEEDBACK);
+    // Establecer valores iniciales de parámetros PARA L
+
+    auto* delayTimeParamL = apvts.getRawParameterValue(PARAM_DELAY_TIME_L);
+    auto* feedbackParamL = apvts.getRawParameterValue(PARAM_FEEDBACK_L);
     
-    if (delayTimeParam)
-        delayProcessor.setParameter(DelayProcessor::DelayTime, delayTimeParam->load());
+    if (delayTimeParamL)
+        delayProcessor.setParameter(DelayProcessor::DelayTimeL, delayTimeParamL->load());
     
-    if (feedbackParam)
-        delayProcessor.setParameter(DelayProcessor::Feedback, feedbackParam->load());
+    if (feedbackParamL)
+        delayProcessor.setParameter(DelayProcessor::FeedbackL, feedbackParamL->load());
+
+    // Establecer valores iniciales de parámetros PARA R
+
+    auto* delayTimeParamR = apvts.getRawParameterValue(PARAM_DELAY_TIME_R);
+    auto* feedbackParamR = apvts.getRawParameterValue(PARAM_FEEDBACK_R);
+
+    if (delayTimeParamR)
+        delayProcessor.setParameter(DelayProcessor::DelayTimeR, delayTimeParamR->load());
+
+    if (feedbackParamR)
+        delayProcessor.setParameter(DelayProcessor::FeedbackR, feedbackParamR->load());
 }
 
 void DelayAudioProcessor::releaseResources()
@@ -222,17 +288,33 @@ void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     // ========================================================================
     // LEER PARÁMETROS Y ACTUALIZAR EL DELAY PROCESSOR
     // ========================================================================
-    auto* delayTimeParam = apvts.getRawParameterValue(PARAM_DELAY_TIME);
-    auto* feedbackParam = apvts.getRawParameterValue(PARAM_FEEDBACK);
+
+    //PARÁMETROS PARA L
+    auto* delayTimeParamL = apvts.getRawParameterValue(PARAM_DELAY_TIME_L);
+    auto* feedbackParamL = apvts.getRawParameterValue(PARAM_FEEDBACK_L);
+
+    //PARA L
+
+    if (delayTimeParamL)
+        delayProcessor.setParameter(DelayProcessor::DelayTimeL, delayTimeParamL->load());
+    
+    if (feedbackParamL)
+        delayProcessor.setParameter(DelayProcessor::FeedbackL, feedbackParamL->load());
+    //PARA R
+
+        //PARÁMETROS PARA R
+    auto* delayTimeParamR = apvts.getRawParameterValue(PARAM_DELAY_TIME_R);
+    auto* feedbackParamR = apvts.getRawParameterValue(PARAM_FEEDBACK_R);
+
+    if (delayTimeParamR)
+        delayProcessor.setParameter(DelayProcessor::DelayTimeR, delayTimeParamR->load());
+
+    if (feedbackParamR)
+        delayProcessor.setParameter(DelayProcessor::FeedbackR, feedbackParamR->load());
+
     auto* wetDryParam = apvts.getRawParameterValue(PARAM_WET_DRY);
     auto* muteParam = apvts.getRawParameterValue(PARAM_MUTE);
     auto* bypassParam = apvts.getRawParameterValue(PARAM_BYPASS);
-    
-    if (delayTimeParam)
-        delayProcessor.setParameter(DelayProcessor::DelayTime, delayTimeParam->load());
-    
-    if (feedbackParam)
-        delayProcessor.setParameter(DelayProcessor::Feedback, feedbackParam->load());
     
     if (wetDryParam)
             delayProcessor.setWetDryMix(wetDryParam->load());
